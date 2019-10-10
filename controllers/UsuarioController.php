@@ -21,7 +21,13 @@ class UsuarioController {
       
     public function inserir($request, $response, $args) {
 		$var = $request->getParsedBody();
-		$usuario = new Usuario(0,$var['nome']);
+		$usuario = new Usuario(0,(int) $var['id_perfil'],
+														 $var['nome'],
+														 $var['email'],
+														 $var['senha'],
+														 $var['dth_inscricao'],
+														 $var['imagem']
+													);
 		$dao = new UsuarioDAO();
 		$usuario = $dao->inserir($usuario);
 		$response = $response->withJson($usuario);
@@ -33,7 +39,14 @@ class UsuarioController {
     public function atualizar($request, $response, $args) {
         $id = (int) $args['id'];
         $var = $request->getParsedBody();
-        $usuario = new Usuario($id,$var['nome']);
+				$usuario = new Usuario($id,
+															(int) $var['id_perfil'],
+														  $var['nome'],
+														  $var['email'],
+														  $var['senha'],
+														  $var['dth_inscricao'],
+														  $var['imagem']
+														  );
         $dao = new UsuarioDAO;
         $dao->atualizar($usuario);
         $response = $response->withJson($usuario);

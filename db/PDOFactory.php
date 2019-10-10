@@ -10,7 +10,9 @@ class PDOFactory {
             /* usando o construtor do PDO devemos sempre adicionar a string 
             relativa ao Sistema Gerenciador de Banco de Dados (SGBD) a ser utilizado */
             //              banco:host=nomehost;dbname=nomedobanco  usuário senha
-            $pdo = new PDO("mysql:host=localhost;dbname=ci_cursos","root", "");
+            #$pdo = new PDO("mysql:host=localhost;dbname=ci_cursos","root", "");
+            # class 20191010
+            $pdo = new PDO('pgsql:host=localhost;port=5432;dbname=ci_cursos', 'postgres', 'postgresql');
             // indicação de atributos de inicialização da conexão com o SGBD
             // reportar erros relativos ao controle de exceção
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
