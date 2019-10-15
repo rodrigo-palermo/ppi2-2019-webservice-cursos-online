@@ -10,7 +10,7 @@
 	// {...}  (somente gerar o token)
 	#$app->post("/auth", "UsuarioController:autenticar");
 
-	//chamada agrupada
+	//Perfil
 	$app->group("/perfil",
 	function() {
 		$this->get("", "PerfilController::listar");
@@ -20,7 +20,7 @@
 		$this->delete("/{id:[0-9]+}", "PerfilController::deletar");
 		}
 	);
-
+    //Usuario
 	$app->group("/usuario",
 	function() {
 		$this->get("", "UsuarioController::listar");
@@ -28,6 +28,56 @@
   		$this->post("", "UsuarioController::inserir");
   		$this->put("/{id:[0-9]+}", "UsuarioController::atualizar");
 		$this->delete("/{id:[0-9]+}", "UsuarioController::deletar");
+		}
+	);
+	//Categoria
+    $app->group("/categoria",
+	function() {
+		$this->get("", "CategoriaController::listar");
+  		$this->get("/{id:[0-9]+}", "CategoriaController::buscarPorId");
+  		$this->post("", "CategoriaController::inserir");
+  		$this->put("/{id:[0-9]+}", "CategoriaController::atualizar");
+		$this->delete("/{id:[0-9]+}", "CategoriaController::deletar");
+		}
+	);
+	//Curso
+    $app->group("/curso",
+	function() {
+		$this->get("", "CursoController::listar");
+  		$this->get("/{id:[0-9]+}", "CursoController::buscarPorId");
+  		$this->post("", "CursoController::inserir");
+  		$this->put("/{id:[0-9]+}", "CursoController::atualizar");
+		$this->delete("/{id:[0-9]+}", "CursoController::deletar");
+		}
+	);
+    //Conteudo
+    $app->group("/conteudo",
+    function() {
+        $this->get("", "ConteudoController::listar");
+        $this->get("/{id:[0-9]+}", "ConteudoController::buscarPorId");
+        $this->post("", "ConteudoController::inserir");
+        $this->put("/{id:[0-9]+}", "ConteudoController::atualizar");
+        $this->delete("/{id:[0-9]+}", "ConteudoController::deletar");
+        }
+    );
+	//Turma
+    $app->group("/turma",
+	function() {
+		$this->get("", "TurmaController::listar");
+  		$this->get("/{id:[0-9]+}", "TurmaController::buscarPorId");
+  		$this->post("", "TurmaController::inserir");
+  		$this->put("/{id:[0-9]+}", "TurmaController::atualizar");
+		$this->delete("/{id:[0-9]+}", "TurmaController::deletar");
+		}
+	);
+	//TurmaTemUsuario
+    $app->group("/turmatemusuario",
+	function() {
+		$this->get("", "TurmaTemUsuarioController::listar");
+  		$this->get("/{id:[0-9]+}", "TurmaTemUsuarioController::buscarPorId");
+  		$this->post("", "TurmaTemUsuarioController::inserir");
+  		$this->put("/{id:[0-9]+}", "TurmaTemUsuarioController::atualizar");
+		$this->delete("/{id:[0-9]+}", "TurmaTemUsuarioController::deletar");
 		}
 	);
 
