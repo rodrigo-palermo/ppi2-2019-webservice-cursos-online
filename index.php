@@ -1,14 +1,16 @@
 <?php
-	use \Psr\Http\Message\ServerRequestInterface as Request;
-	use \Psr\Http\Message\ResponseInterface as Response;
+//	use \Psr\Http\Message\ServerRequestInterface as Request;
+//	use \Psr\Http\Message\ResponseInterface as Response;
 
-	include 'header.php';
+require_once "header.php";
 
 	$app = new \Slim\App($config);
 
 	// criação de rota de autenticação para geração de token
 	// {...}  (somente gerar o token)
-	#$app->post("/auth", "UsuarioController:autenticar");
+	$app->post("/auth", "UsuarioController::autenticar");
+
+	$app->group('', function() use ($app) {
 
 	//Perfil
 	$app->group("/perfil",
@@ -50,6 +52,7 @@
 		$this->delete("/{id:[0-9]+}", "CursoController::deletar");
 		}
 	);
+
     //Conteudo
     $app->group("/conteudo",
     function() {
@@ -80,6 +83,8 @@
 		$this->delete("/{id:[0-9]+}", "TurmaTemUsuarioController::deletar");
 		}
 	);
+
+    })->add("UsuarioController::validarToken");
 
 	$app->run();
 ?>

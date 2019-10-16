@@ -1,6 +1,54 @@
 <?php
+use \Firebase\JWT\JWT;
 
 class UsuarioController {
+
+    private static $secretKey = "s3cr3t";
+
+    public function autenticar($req, $resp, $args)
+    {
+        $var = $req->getParsedBody();
+
+        $dao = new UsuarioDao();
+        $usuario = $dao->buscarPorLogin($var['nome']);
+
+        if($usuario == false) {
+            return $resp->withStatus(401);
+        } else {
+            if($usuario->senha == $var['senha']) {
+                #carrega (carga) o conteudo do token
+                $tokenpayload = array(  #nao usar dados sensíveis. Sendo id e nome únicos no banco, cada token será diferente
+                    "usuario_id" => $usuario->id,
+                    "usuario_nome" => $usuario->nome,
+                );
+                $token = JWT::encode($tokenpayload, UsuarioController::$secretKey);
+
+                return $resp->withJson(["token" => $token], 201)
+                    ->withHeader("Content-type", "application/json");
+
+            }
+
+        }
+    }
+
+    public function validarToken($req, $resp, $next)
+    {
+        $token = str_replace("Bearer ", "", $req->getHeader('Authorization')[0]);
+
+        if($token) {
+            try {
+                #decodificando (conforme o validador online da JWT faz)
+                $decoded = JWT::decode($token, UsuarioController::$secretKey, array("HS256"));
+                if($decoded)
+                    return($next($req, $resp));
+
+            } catch(Exception $error) {
+                return $resp->withStatus(401);
+            }
+        }
+
+        return $resp->withStatus(401);
+    }
 
     public function listar($request, $response, $args) {
 		$dao = new UsuarioDAO();
