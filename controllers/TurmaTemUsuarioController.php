@@ -21,6 +21,10 @@ class TurmaTemUsuarioController {
       
     public function inserir($request, $response, $args) {
 		$var = $request->getParsedBody();
+
+		// turma deve ser criada com somente um usuario PROFESSOR na classe Turma
+        // se turma existe, banco verifica se ALUNO já está matriculado nesta turma(constrain unique)
+
 		$turmatemusuario = new TurmaTemUsuario(0,
             (int) $var['id_turma'],
             (int) $var['id_usuario']

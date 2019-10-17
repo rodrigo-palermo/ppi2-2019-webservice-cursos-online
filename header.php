@@ -31,6 +31,8 @@ require_once "db/PDOFactory.php";
 //require_once "dao/TurmaTemUsuarioDAO.php";
 //require_once "controllers/TurmaTemUsuarioController.php";
 
+//require_once "controllers/ExceptionController.php";
+
 //autoload de classes nas pastas class, controller e dao
 spl_autoload_register( function($className){
     try {
@@ -38,6 +40,8 @@ spl_autoload_register( function($className){
             require_once __DIR__.'/dao/'.$className.'.php';
         else if(substr($className,-10) == 'Controller')
             require_once __DIR__.'/controllers/'.$className.'.php';
+        else if(substr($className,-9) == 'Exception')
+            require_once __DIR__.'/exceptions/'.$className.'.php';
         else
             require_once __DIR__.'/class/'.$className.'.php';
 
@@ -55,4 +59,4 @@ $config = [ //
         'addContentLengthHeader' => false,  //usar em caso de erro desconhecido
     ]
 
-];	
+];

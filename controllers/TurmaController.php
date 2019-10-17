@@ -21,6 +21,9 @@ class TurmaController {
       
     public function inserir($request, $response, $args) {
 		$var = $request->getParsedBody();
+
+		// Ao inserir Turma, deve inserir PROFESSOR que criou a Turma na tabela TurmaTemUsuario
+
 		$turma = new Turma(0,
                             (int) $var['id_curso'],
 							$var['nome'],
@@ -30,6 +33,10 @@ class TurmaController {
 							);
 		$dao = new TurmaDAO();
 		$turma = $dao->inserir($turma);
+
+//		$objTurmaTemUsuarioDAO = new TurmaTemUsuarioDAO();
+//		$objTurmaTemUsuarioDAO->inserir();
+
 		$response = $response->withJson($turma);
 		$response = $response->withHeader('Content-type', 'application/json');
 		$response = $response->withStatus(201);
