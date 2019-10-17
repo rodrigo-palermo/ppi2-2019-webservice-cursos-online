@@ -11,13 +11,27 @@ class PerfilController {
     }
 
     public function buscarPorId($request, $response, $args) {
-		$id = (int) $args['id'];
-		$dao = new PerfilDAO();
-		$perfil = $dao->buscarPorId($id);
-		$response = $response->withJson($perfil);
-		$response = $response->withHeader('Content-type', 'application/json');    
-		return $response;
-      }
+        try {
+
+            $id = (int)$args['id'];
+            $dao = new PerfilDAO();
+            $perfil = $dao->buscarPorId($id);
+            if ($perfil->id) {
+                $response = $response->withJson($perfil);
+                $response = $response->withHeader('Content-type', 'application/json');
+                return $response;
+            }
+            throw new \InvalidArgumentException('Não existem dados para o id informado.', 1);
+        } catch (\InvalidArgumentException $exception) {
+            return $response->withJson([
+                'error' => WsException::class,
+                'status' => 404,
+                'code' => $exception->getCode(),
+                'userMessage' => $exception->getMessage(),
+                'developerMessage' => $exception->getMessage()
+            ], 404);
+        }
+    }
       
     public function inserir($request, $response, $args) {
 		$var = $request->getParsedBody();

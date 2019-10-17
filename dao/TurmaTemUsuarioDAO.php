@@ -34,6 +34,18 @@
             );
 		}
 
+		public function buscarPorTurmaId($id_turma) {
+			$query = "SELECT * FROM turma_tem_usuario WHERE id_turma = :id_turma";
+			$pdo = PDOFactory::getConexao();
+			$comando = $pdo->prepare($query);
+			$comando->bindParam ("id_turma",$id_turma);
+			$comando->execute();
+            $usuariosPorTurma = $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            return $usuariosPorTurma;
+
+		}
+
 		public function inserir(Turmatemusuario $turmatemusuario) {
 			$query = "INSERT INTO turma_tem_usuario(id_turma, id_usuario)
 						 VALUES (:id_turma, :id_usuario)";

@@ -81,6 +81,7 @@ $app->group('', function() use ($app) {
         function() {
             $this->get("", "TurmaTemUsuarioController::listar");
             $this->get("/{id:[0-9]+}", "TurmaTemUsuarioController::buscarPorId");
+            $this->get("/turma/{id_turma:[0-9]+}", "TurmaTemUsuarioController::buscarPorTurmaId");
             $this->post("", "TurmaTemUsuarioController::inserir");
             $this->put("/{id:[0-9]+}", "TurmaTemUsuarioController::atualizar");
             $this->delete("/{id:[0-9]+}", "TurmaTemUsuarioController::deletar");

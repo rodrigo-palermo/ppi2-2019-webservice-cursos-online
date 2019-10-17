@@ -19,6 +19,19 @@ class TurmaTemUsuarioController {
 		return $response;
       }
       
+    public function buscarPorTurmaId($request, $response, $args) {
+		$id_turma = (int) $args['id_turma'];
+		$dao = new TurmaTemUsuarioDAO();
+		$turmatemusuario = $dao->buscarPorTurmaId($id_turma);
+//        $alunosPorTurma = [];
+//		foreach ($turmatemusuario as $turma){
+//            $alunosPorTurma[] = $turma->id_aluno;
+//        }
+		$response = $response->withJson($turmatemusuario);
+		$response = $response->withHeader('Content-type', 'application/json');
+		return $response;
+    }
+
     public function inserir($request, $response, $args) {
 		$var = $request->getParsedBody();
 
