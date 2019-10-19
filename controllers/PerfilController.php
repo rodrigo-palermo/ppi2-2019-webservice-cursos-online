@@ -3,11 +3,18 @@
 class PerfilController {
 
     public function listar($request, $response, $args) {
-		$dao = new PerfilDAO();
-		$lista = $dao->listar();
-		$response = $response->withJson($lista);
-		$response = $response->withHeader("Content-type", "application/json");
-        return $response;
+        try {
+            $dao = new PerfilDAO();
+            $lista = $dao->listar();
+            if ($lista[0]) {
+                $response = $response->withJson($lista);
+                $response = $response->withHeader("Content-type", "application/json");
+                return $response;
+            }
+            throw new WsException(404, $response);
+        } catch(WsException $e) {
+            return $e->response;
+        }
     }
 
     public function buscarPorId($request, $response, $args) {
@@ -21,15 +28,9 @@ class PerfilController {
                 $response = $response->withHeader('Content-type', 'application/json');
                 return $response;
             }
-            throw new \InvalidArgumentException('Não existem dados para o id informado.', 1);
-        } catch (\InvalidArgumentException $exception) {
-            return $response->withJson([
-                'error' => WsException::class,
-                'status' => 404,
-                'code' => $exception->getCode(),
-                'userMessage' => $exception->getMessage(),
-                'developerMessage' => $exception->getMessage()
-            ], 404);
+            throw new WsException(404, $response);
+        } catch(WsException $e) {
+            return $e->response;
         }
     }
       
