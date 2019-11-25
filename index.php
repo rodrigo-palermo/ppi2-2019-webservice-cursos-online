@@ -17,7 +17,7 @@ $app->group('', function() use ($app) {
 
     //Perfil
     $app->group("/perfil",
-        function() {
+        function () {
             $this->get("", "PerfilController::listar");
             $this->get("/{id:[0-9]+}", "PerfilController::buscarPorId");
             $this->post("", "PerfilController::inserir");
@@ -27,7 +27,7 @@ $app->group('', function() use ($app) {
     );
     //Usuario
     $app->group("/usuario",
-        function() {
+        function () {
             $this->get("", "UsuarioController::listar");
             $this->get("/{id:[0-9]+}", "UsuarioController::buscarPorId");
             $this->post("", "UsuarioController::inserir");
@@ -37,7 +37,7 @@ $app->group('', function() use ($app) {
     );
     //Categoria
     $app->group("/categoria",
-        function() {
+        function () {
             $this->get("", "CategoriaController::listar");
             $this->get("/{id:[0-9]+}", "CategoriaController::buscarPorId");
             $this->post("", "CategoriaController::inserir");
@@ -47,7 +47,7 @@ $app->group('', function() use ($app) {
     );
     //Curso
     $app->group("/curso",
-        function() {
+        function () {
             $this->get("", "CursoController::listar");
             $this->get("/{id:[0-9]+}", "CursoController::buscarPorId");
             $this->post("", "CursoController::inserir");
@@ -58,7 +58,7 @@ $app->group('', function() use ($app) {
 
     //Conteudo
     $app->group("/conteudo",
-        function() {
+        function () {
             $this->get("", "ConteudoController::listar");
             $this->get("/{id:[0-9]+}", "ConteudoController::buscarPorId");
             $this->post("", "ConteudoController::inserir");
@@ -68,7 +68,7 @@ $app->group('', function() use ($app) {
     );
     //Turma
     $app->group("/turma",
-        function() {
+        function () {
             $this->get("", "TurmaController::listar");
             $this->get("/{id:[0-9]+}", "TurmaController::buscarPorId");
             $this->post("", "TurmaController::inserir");
@@ -78,7 +78,7 @@ $app->group('', function() use ($app) {
     );
     //TurmaTemUsuario
     $app->group("/turmatemusuario",
-        function() {
+        function () {
             $this->get("", "TurmaTemUsuarioController::listar");
             $this->get("/{id:[0-9]+}", "TurmaTemUsuarioController::buscarPorId");
             $this->get("/turma/{id_turma:[0-9]+}", "TurmaTemUsuarioController::buscarPorTurmaId");
@@ -88,8 +88,10 @@ $app->group('', function() use ($app) {
         }
     );
 
+    //com validacao de token
 })->add("UsuarioController::validarToken");
-
+    //ou sem validacao para testes
+//});
 	$app->run();
 
 ?>

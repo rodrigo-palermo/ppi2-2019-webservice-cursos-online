@@ -3,3 +3,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [L]
 RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+Header set Access-Control-Allow-Origin: "*"
+Header set Access-Control-Allow-Methods: "DELETE, GET, OPTIONS, PATCH, POST, PUT"
+Header set Access-Control-Allow-Headers: "Origin, X-Requested-With, Content-Type, Accept, Authorization"
