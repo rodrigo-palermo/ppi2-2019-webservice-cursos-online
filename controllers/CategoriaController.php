@@ -40,7 +40,7 @@ class CategoriaController {
         $categoria = new Categoria(
             $id,
             $var['nome'],
-            $var['descricao'],
+            $var['descricao']
         );
         $dao = new CategoriaDAO;
         $dao->atualizar($categoria);

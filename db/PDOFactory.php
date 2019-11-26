@@ -10,7 +10,10 @@ class PDOFactory {
         if (getenv('DATABASE_URL')) {
             $database_url = getenv('DATABASE_URL');
         } else {
-            $database_url = 'postgres://postgres:admin@localhost:5432/ci_cursos';
+            # work develop database config 20191010
+            //$database_url = 'postgres://postgres:admin@localhost:5432/ci_cursos';
+            # class develop database config 20191010
+            $database_url = 'postgres://postgres:postgresql@localhost:5432/ci_cursos';
         }
         $url = parse_url($database_url);
         $url["path"] = ltrim($url["path"], "/");
@@ -27,9 +30,9 @@ class PDOFactory {
             //              banco:host=nomehost;dbname=nomedobanco  usuário senha
             #$pdo = new PDO("mysql:host=localhost;dbname=ci_cursos","root", "");
             # class develop database config 20191010
-            #$pdo = new PDO('pgsql:host=localhost;port=5432;dbname=ci_cursos', 'postgres', 'postgresql');
-             # work develop database config 20191010
-            #$pdo = new PDO('pgsql:host=localhost;port=5432;dbname=ci_cursos', 'postgres', 'admin');
+            //$pdo = new PDO('pgsql:host=localhost;port=5432;dbname=ci_cursos', 'postgres', 'postgresql');
+            # work develop database config 20191010
+            //$pdo = new PDO('pgsql:host=localhost;port=5432;dbname=ci_cursos', 'postgres', 'admin');
 
             $pdo = new PDO('pgsql:host='.$hostname.';port='.$port.';dbname='.$database, $username, $password);
             // indicação de atributos de inicialização da conexão com o SGBD

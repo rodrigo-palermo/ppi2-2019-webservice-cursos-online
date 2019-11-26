@@ -91,7 +91,7 @@ $app->group('', function() use ($app) {
     //com validacao de token
 })->add("UsuarioController::validarToken");
     //ou sem validacao para testes
-//});
+// });
 	$app->run();
 
 ?>
