@@ -85,14 +85,18 @@
             $comando->bindParam ("nome",$nome);
             $comando->execute();
             $resultado = $comando->fetch(PDO::FETCH_OBJ);
-            return new Usuario($resultado->id,
-                $resultado->id_perfil,
-                $resultado->nome,
-                $resultado->email,
-                $resultado->senha,
-                $resultado->dth_inscricao,
-                $resultado->imagem
-            );
+            if(!empty($resultado)) {
+                return new Usuario($resultado->id,
+                    $resultado->id_perfil,
+                    $resultado->nome,
+                    $resultado->email,
+                    $resultado->senha,
+                    $resultado->dth_inscricao,
+                    $resultado->imagem
+                );
+            } else {
+                return false;
+            }
         }
 	}
 ?>

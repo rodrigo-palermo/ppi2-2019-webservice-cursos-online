@@ -26,6 +26,8 @@ class UsuarioController {
                 return $resp->withJson(["token" => $token], 201)
                     ->withHeader("Content-type", "application/json");
 
+            } else {
+                return $resp->withStatus(401);
             }
 
         }
