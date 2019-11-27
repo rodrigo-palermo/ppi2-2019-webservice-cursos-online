@@ -11,9 +11,9 @@ class PDOFactory {
             $database_url = getenv('DATABASE_URL');
         } else {
             # work develop database config 20191010
-            //$database_url = 'postgres://postgres:admin@localhost:5432/ci_cursos';
+            $database_url = 'postgres://postgres:admin@localhost:5432/ci_cursos';
             # class develop database config 20191010
-            $database_url = 'postgres://postgres:postgresql@localhost:5432/ci_cursos';
+            //$database_url = 'postgres://postgres:postgresql@localhost:5432/ci_cursos';
         }
         $url = parse_url($database_url);
         $url["path"] = ltrim($url["path"], "/");
