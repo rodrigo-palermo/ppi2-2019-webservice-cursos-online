@@ -98,5 +98,20 @@
                 return false;
             }
         }
+
+        public static function buscarPerfilPorLogin($nome) {
+            $query = "SELECT nome FROM perfil WHERE id IN (
+                                SELECT id_perfil FROM usuario WHERE nome = :nome)";
+            $pdo = PDOFactory::getConexao();
+            $comando = $pdo->prepare($query);
+            $comando->bindParam ("nome",$nome);
+            $comando->execute();
+            $resultado = $comando->fetch(PDO::FETCH_OBJ);
+            if(!empty($resultado)) {
+                return $resultado->nome;
+            } else {
+                return false;
+            }
+        }
 	}
 ?>

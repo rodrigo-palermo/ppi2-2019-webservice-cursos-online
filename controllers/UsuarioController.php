@@ -22,8 +22,11 @@ class UsuarioController {
                     "usuario_nome" => $usuario->nome,
                 );
                 $token = JWT::encode($tokenpayload, UsuarioController::$secretKey);
-
-                return $resp->withJson(["token" => $token], 201)
+                $perfil = UsuarioDAO::buscarPerfilPorLogin($usuario->nome);
+                return $resp->withJson(["id"=> $usuario->id,
+                                        "nome"=> $usuario->nome,
+                                        "perfil" => $perfil,
+                                        "token" => $token], 201)
                     ->withHeader("Content-type", "application/json");
 
             } else {
@@ -67,8 +70,21 @@ class UsuarioController {
 		$response = $response->withJson($usuario);
 		$response = $response->withHeader('Content-type', 'application/json');    
 		return $response;
-      }
-      
+    }
+
+//    public function buscarPerfilPorIdUsuario($request, $response, $args) {
+//		$id = (int) $args['id'];
+//		$dao = new UsuarioDAO();
+//		$usuario = $dao->buscarPorId($id);
+//		$id_perfil = $usuario->id_perfil;
+//		$daoPerfil = new PerfilDAO();
+//		$perfil = $daoPerfil->buscarPorId($id_perfil);
+//		$perfilNome = $perfil->nome;
+//		$response = $response->withJson($perfilNome);
+//		$response = $response->withHeader('Content-type', 'application/json');
+//		return $response;
+//      }
+
     public function inserir($request, $response, $args) {
 		$var = $request->getParsedBody();
 		$usuario = new Usuario(0,(int) $var['id_perfil'],

@@ -25,7 +25,7 @@ class PDOFactory {
 	    $database = $url["path"];
 
         if(!isset($pdo)) {
-            /* usando o construtor do PDO devemos sempre adicionar a string
+            /* com construtor do PDO sempre adicionar a string
             relativa ao Sistema Gerenciador de Banco de Dados (SGBD) a ser utilizado */
             //              banco:host=nomehost;dbname=nomedobanco  usuário senha
             #$pdo = new PDO("mysql:host=localhost;dbname=ci_cursos","root", "");

@@ -87,11 +87,17 @@ $app->group('', function() use ($app) {
             $this->delete("/{id:[0-9]+}", "TurmaTemUsuarioController::deletar");
         }
     );
+    //UsuarioPerfil
+    $app->group("/usuarioperfil",
+        function () {
+            $this->get("/{id:[0-9]+}", "UsuarioController::buscarPerfilPorIdUsuario");
+        }
+    );
 
     //com validacao de token
-//})->add("UsuarioController::validarToken");
+})->add("UsuarioController::validarToken");
     //ou sem validacao para testes
- });
+// });
 	$app->run();
 
 ?>
