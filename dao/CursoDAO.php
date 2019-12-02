@@ -21,7 +21,7 @@
 										 $row->descricao,
 										 $row->dth_criacao,
 										 $row->imagem,
-                                         $row->categoria_nome,
+                                         $row->categoria_nome
 										 );
 			}
 			return $curso;
