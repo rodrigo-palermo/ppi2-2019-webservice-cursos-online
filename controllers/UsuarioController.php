@@ -30,7 +30,8 @@ class UsuarioController {
                     ->withHeader("Content-type", "application/json");
 
             } else {
-                return $resp->withStatus(401);
+                return $resp->withJson(['errorMessage'=>'Usuário e/ou Senha incorretos'])
+                            ->withStatus(401);
             }
 
         }

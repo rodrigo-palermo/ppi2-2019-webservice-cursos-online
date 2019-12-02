@@ -8,8 +8,9 @@
         public $descricao;
         public $dth_criacao;
         public $imagem;
-        
-        function __construct($id, $id_categoria, $id_usuario_criacao, $nome, $descricao, $dth_criacao, $imagem)
+        public $categoria_nome;
+
+        function __construct($id, $id_categoria, $id_usuario_criacao, $nome, $descricao, $dth_criacao, $imagem, $categoria_nome = null)
         {
             $this->id = $id;
             $this->id_categoria = $id_categoria;
@@ -18,6 +19,7 @@
             $this->descricao = $descricao;
             $this->dth_criacao = $dth_criacao;
             $this->imagem = $imagem;
+            $this->categoria_nome = $categoria_nome;
         }
     }
 ?>
