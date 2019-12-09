@@ -5,7 +5,8 @@
 	class UsuarioDAO {
 
 		public function listar() {
-			$query = "SELECT * FROM usuario";
+			$query = "SELECT u.*, p.nome as perfil_nome  FROM usuario u
+                        LEFT JOIN perfil p ON u.id_perfil = p.id";
 			$pdo = PDOFactory::getConexao();
 			$comando = $pdo->prepare($query);
 			$comando->execute();
@@ -17,7 +18,8 @@
 										 $row->email,
 										 $row->senha,
 										 $row->dth_inscricao,
-										 $row->imagem
+										 $row->imagem,
+										 $row->perfil_nome,
 										 );
 			}
 			return $usuario;
@@ -112,6 +114,35 @@
             } else {
                 return false;
             }
+        }
+
+        public function buscarPorPerfil($perfil) {
+		    $perfil = strtolower($perfil);
+            $query = "SELECT u.id as u_id,
+                             u.id_perfil as u_id_perfil,
+                             u.nome as u_nome,
+                             u.email as u_email,
+                             u.dth_inscricao as u_dth_inscricao,
+                             u.imagem as u_imagem
+                      FROM usuario u LEFT JOIN perfil p
+                        ON u.id_perfil = p.id 
+                        WHERE lower(p.nome) = :perfil";
+            $pdo = PDOFactory::getConexao();
+            $comando = $pdo->prepare($query);
+            $comando->bindParam ("perfil",$perfil);
+            $comando->execute();
+            $usuario = array();
+            while($row = $comando->fetch(PDO::FETCH_OBJ)) {
+                $usuario[] = new Usuario($row->u_id,
+                    $row->u_id_perfil,
+                    $row->u_nome,
+                    $row->u_email,
+                    null,
+                    $row->u_dth_inscricao,
+                    $row->u_imagem
+                );
+            }
+            return $usuario;
         }
 	}
 ?>

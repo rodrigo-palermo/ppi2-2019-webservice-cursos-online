@@ -94,6 +94,27 @@ $app->group('', function() use ($app) {
         }
     );
 
+    //CursosDoProfessor
+    $app->group("/cursosdoprofessor",
+        function () {
+            $this->get("/{id_usuario_criacao:[0-9]+}", "CursoController::buscarPorIdUsuarioCriacao");
+        }
+    );
+
+    //TurmasDoCurso
+    $app->group("/turmasdocurso",
+        function () {
+            $this->get("/{id_curso:[0-9]+}", "TurmaController::buscarPorIdCurso");
+        }
+    );
+
+    //UsuariosPorPefil
+    $app->group("/usuariosporperfil",
+        function () {
+            $this->get("/{perfil:[a-zA-Z0-9]+}", "UsuarioController::buscarPorPerfil");
+        }
+    );
+
     //com validacao de token
 })->add("UsuarioController::validarToken");
     //ou sem validacao para testes

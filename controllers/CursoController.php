@@ -17,8 +17,17 @@ class CursoController {
 		$response = $response->withJson($curso);
 		$response = $response->withHeader('Content-type', 'application/json');    
 		return $response;
-      }
-      
+    }
+
+    public function buscarPorIdUsuarioCriacao($request, $response, $args) {
+        $id_usuario_criacao = (int) $args['id_usuario_criacao'];
+        $dao = new CursoDAO();
+        $curso = $dao->buscarPorIdUsuarioCriacao($id_usuario_criacao);
+        $response = $response->withJson($curso);
+        $response = $response->withHeader('Content-type', 'application/json');
+        return $response;
+    }
+
     public function inserir($request, $response, $args) {
 		$var = $request->getParsedBody();
 		$curso = new Curso(0,

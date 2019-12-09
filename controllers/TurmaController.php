@@ -17,7 +17,16 @@ class TurmaController {
 		$response = $response->withJson($turma);
 		$response = $response->withHeader('Content-type', 'application/json');    
 		return $response;
-      }
+    }
+
+    public function buscarPorIdCurso($request, $response, $args) {
+        $id_curso = (int) $args['id_curso'];
+        $dao = new TurmaDAO();
+        $turma = $dao->buscarPorIdCurso($id_curso);
+        $response = $response->withJson($turma);
+        $response = $response->withHeader('Content-type', 'application/json');
+        return $response;
+    }
       
     public function inserir($request, $response, $args) {
 		$var = $request->getParsedBody();
@@ -29,7 +38,7 @@ class TurmaController {
 							$var['nome'],
 							$var['descricao'],
 							$var['dth_criacao'],
-							$var['imagem']
+							$var['imagem'],
 							);
 		$dao = new TurmaDAO();
 		$turma = $dao->inserir($turma);

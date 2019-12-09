@@ -44,6 +44,26 @@
 							   );
 		}
 
+		public function buscarPorIdUsuarioCriacao($id_usuario_criacao) {
+		    $query = "SELECT * FROM curso WHERE id_usuario_criacao = :id_usuario_criacao";
+		    $pdo = PDOFactory::getConexao();
+		    $comando = $pdo->prepare($query);
+		    $comando->bindParam("id_usuario_criacao",$id_usuario_criacao);
+		    $comando->execute();
+            $curso = array();
+            while($row = $comando->fetch(PDO::FETCH_OBJ)) {
+                $curso[] = new Curso($row->id,
+                    $row->id_categoria,
+                    $row->id_usuario_criacao,
+                    $row->nome,
+                    $row->descricao,
+                    $row->dth_criacao,
+                    $row->imagem
+                );
+            }
+            return $curso;
+        }
+
 		public function inserir(Curso $curso) {
 			$query = "INSERT INTO curso(id_categoria, id_usuario_criacao,nome,descricao,dth_criacao,imagem)
 						 VALUES (:id_categoria,:id_usuario_criacao,:nome,:descricao,:dth_criacao,:imagem)";

@@ -5,7 +5,9 @@
 	class TurmaDAO {
 
 		public function listar() {
-			$query = "SELECT * FROM turma";
+			$query = "SELECT t.*, c.nome as curso_nome FROM turma t
+                        LEFT JOIN curso c 
+                        ON t.id_curso = c.id";
 			$pdo = PDOFactory::getConexao();
 			$comando = $pdo->prepare($query);
 			$comando->execute();
@@ -16,7 +18,8 @@
 										 $row->nome,
 										 $row->descricao,
 										 $row->dth_criacao,
-										 $row->imagem
+										 $row->imagem,
+										 $row->curso_nome
 										 );
 			}
 			return $turma;
@@ -37,6 +40,26 @@
 							   $resultado->imagem
 							   );
 		}
+
+        public function buscarPorIdCurso($id_curso) {
+            $query = "SELECT * FROM turma WHERE id_curso = :id_curso";
+            $pdo = PDOFactory::getConexao();
+            $comando = $pdo->prepare($query);
+            $comando->bindParam("id_curso",$id_curso);
+            $comando->execute();
+            $turma = array();
+            while($row = $comando->fetch(PDO::FETCH_OBJ)) {
+                $turma[] = new Turma($row->id,
+                    $row->id_curso,
+                    $row->nome,
+                    $row->descricao,
+                    $row->dth_criacao,
+                    $row->imagem
+//                    $row->curso_nome
+                );
+            }
+            return $turma;
+        }
 
 		public function inserir(Turma $turma) {
 			$query = "INSERT INTO turma(id_curso, nome,descricao,dth_criacao,imagem)

@@ -130,4 +130,13 @@ class UsuarioController {
 		$response = $response->withHeader('Content-type', 'application/json');
 		return $response;
 	}
+
+    public function buscarPorPerfil($request, $response, $args) {
+        $perfil = $args['perfil'];
+        $dao = new UsuarioDAO();
+        $lista = $dao->buscarPorPerfil($perfil);
+        $response = $response->withJson($lista);
+        $response = $response->withHeader("Content-type", "application/json");
+        return $response;
+    }
 }
