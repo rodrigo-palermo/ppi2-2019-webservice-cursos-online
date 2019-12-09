@@ -3,6 +3,10 @@
 require_once "db/PDOFactory.php";
 
 // classes
+require_once "class/Endereco.php";
+require_once "dao/EnderecoDAO.php";
+//require_once "controllers/EnderecoController.php";
+
 require_once "class/Perfil.php";
 require_once "dao/PerfilDAO.php";
 require_once "controllers/PerfilController.php";

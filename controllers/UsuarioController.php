@@ -56,6 +56,50 @@ class UsuarioController {
         return $resp->withStatus(401);
     }
 
+    public function registrar($req, $resp, $args)
+    {
+        $var = $req->getParsedBody();
+
+        $usuarioDao = new UsuarioDao();
+        $usuario = $usuarioDao->buscarPorLogin($var['nome']);
+
+        if($usuario == true) {
+            // Nome de usuario existente
+            return $resp->withStatus(401);
+        } else {
+            $endereco = new Endereco(0,
+                (int) $var['cep'],
+                $var['logradouro'],
+                (int) $var['numero'],
+                $var['complemento'],
+                $var['localidade'],
+                $var['bairro'],
+                $var['uf']
+            );
+            $enderecoDao = new EnderecoDao();
+            $endereco_id_last_inserted = $enderecoDao->inserir($endereco);
+//            $pdo = PDOFactory::getConexao();
+//            $id_endereco = $pdo->lastInsertId();
+
+
+
+            $usuario = new Usuario(0,
+                (int) $var['id_perfil'],
+                $var['nome'],
+                $var['email'],
+                $var['senha'],
+                $var['dth_inscricao'],
+                $var['imagem'],
+                $endereco_id_last_inserted
+            );
+            $usuarioDao->inserir($usuario);
+
+            $resp = $resp->withHeader('Content-type', 'application/json');
+            $resp = $resp->withStatus(201);
+            return $resp;
+        }
+    }
+
     public function listar($request, $response, $args) {
 		$dao = new UsuarioDAO();
 		$lista = $dao->listar();

@@ -19,7 +19,8 @@
 										 $row->senha,
 										 $row->dth_inscricao,
 										 $row->imagem,
-										 $row->perfil_nome,
+										 $row->id_endereco,
+										 $row->perfil_nome
 										 );
 			}
 			return $usuario;
@@ -43,8 +44,8 @@
 		}
 
 		public function inserir(Usuario $usuario) {
-			$query = "INSERT INTO usuario(id_perfil,nome,email,senha,dth_inscricao,imagem)
-						 VALUES (:id_perfil,:nome,:email,:senha,:dth_inscricao,:imagem)";            
+			$query = "INSERT INTO usuario(id_perfil,nome,email,senha,dth_inscricao,imagem,id_endereco)
+						 VALUES (:id_perfil,:nome,:email,:senha,:dth_inscricao,:imagem,:id_endereco)";
 			$pdo = PDOFactory::getConexao();
 			$comando = $pdo->prepare($query);
 			$comando->bindParam(":id_perfil", $usuario->id_perfil);
@@ -53,6 +54,7 @@
 			$comando->bindParam(":senha", $usuario->senha);
 			$comando->bindParam(":dth_inscricao", $usuario->dth_inscricao);
 			$comando->bindParam(":imagem", $usuario->imagem);
+			$comando->bindParam(":id_endereco", $usuario->id_endereco);
 			$comando->execute();
 			$usuario->id = $pdo->lastInsertId();
 			return $usuario;

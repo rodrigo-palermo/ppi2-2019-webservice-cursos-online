@@ -9,7 +9,8 @@
         public $dth_inscricao;
         public $imagem;
         public $perfil_nome;
-        
+        public $id_endereco;
+
         function __construct($id,
                              $id_perfil,
                              $nome,
@@ -17,6 +18,7 @@
                              $senha,
                              $dth_inscricao,
                              $imagem,
+                             $id_endereco = null,
                              //fk relations
                              $perfil_nome = null
         )
@@ -28,6 +30,7 @@
             $this->senha = $senha;
             $this->dth_inscricao = $dth_inscricao;
             $this->imagem = $imagem;
+            $this->id_endereco = $id_endereco;
             $this->perfil_nome = $perfil_nome;
         }
     }
