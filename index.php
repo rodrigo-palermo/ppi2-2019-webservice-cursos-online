@@ -15,8 +15,11 @@ $app->post("/auth", "UsuarioController::autenticar");
 // register
 $app->post("/register", "UsuarioController::registrar");
 
-// listar cursos free existentes
+// listar cursos existentes
 $app->get("/cursosfree", "CursoController::listar");
+
+// listar categorias existentes
+$app->get("/categoriasfree", "CategoriaController::listar");
 
 // grupo para validar token
 $app->group('', function() use ($app) {

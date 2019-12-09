@@ -38,14 +38,10 @@ class TurmaController {
 							$var['nome'],
 							$var['descricao'],
 							$var['dth_criacao'],
-							$var['imagem'],
+							$var['imagem']
 							);
 		$dao = new TurmaDAO();
 		$turma = $dao->inserir($turma);
-
-//		$objTurmaTemUsuarioDAO = new TurmaTemUsuarioDAO();
-//		$objTurmaTemUsuarioDAO->inserir();
-
 		$response = $response->withJson($turma);
 		$response = $response->withHeader('Content-type', 'application/json');
 		$response = $response->withStatus(201);
