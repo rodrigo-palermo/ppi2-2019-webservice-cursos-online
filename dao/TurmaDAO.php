@@ -5,9 +5,12 @@
 	class TurmaDAO {
 
 		public function listar() {
-			$query = "SELECT t.*, c.nome as curso_nome FROM turma t
-                        LEFT JOIN curso c 
-                        ON t.id_curso = c.id";
+			$query = "SELECT t.*,
+                        c.nome as curso_nome,
+                        u.nome as professor_nome
+                         FROM turma t
+                        LEFT JOIN curso c ON t.id_curso = c.id
+                        LEFT JOIN usuario u ON c.id_usuario_criacao = u.id";
 			$pdo = PDOFactory::getConexao();
 			$comando = $pdo->prepare($query);
 			$comando->execute();
@@ -19,7 +22,8 @@
 										 $row->descricao,
 										 $row->dth_criacao,
 										 $row->imagem,
-										 $row->curso_nome
+										 $row->curso_nome,
+										 $row->professor_nome
 										 );
 			}
 			return $turma;
@@ -42,7 +46,13 @@
 		}
 
         public function buscarPorIdCurso($id_curso) {
-            $query = "SELECT * FROM turma WHERE id_curso = :id_curso";
+            $query = "SELECT t.*,
+                        c.nome as curso_nome,
+                        u.nome as professor_nome
+                         FROM turma t
+                        LEFT JOIN curso c ON t.id_curso = c.id
+                        LEFT JOIN usuario u ON c.id_usuario_criacao = u.id
+                         WHERE id_curso = :id_curso";
             $pdo = PDOFactory::getConexao();
             $comando = $pdo->prepare($query);
             $comando->bindParam("id_curso",$id_curso);
@@ -54,8 +64,9 @@
                     $row->nome,
                     $row->descricao,
                     $row->dth_criacao,
-                    $row->imagem
-//                    $row->curso_nome
+                    $row->imagem,
+                    $row->curso_nome,
+                    $row->professor_nome
                 );
             }
             return $turma;

@@ -7,7 +7,9 @@
         public $descricao;
         public $dth_criacao;
         public $imagem;
-        
+        public $curso_nome;
+        public $professor_nome;
+
         function __construct($id,
                              $id_curso,
                              $nome,
@@ -15,7 +17,8 @@
                              $dth_criacao,
                              $imagem,
                              //fk relations
-                             $curso_nome = null
+                             $curso_nome = null,
+                             $professor_nome = null
 
         )
         {
@@ -26,6 +29,7 @@
             $this->dth_criacao = $dth_criacao;
             $this->imagem = $imagem;
             $this->curso_nome = $curso_nome;
+            $this->professor_nome = $professor_nome;
         }
     }
 ?>

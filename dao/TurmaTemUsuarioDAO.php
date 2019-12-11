@@ -5,7 +5,18 @@
 	class TurmaTemUsuarioDAO {
 
 		public function listar() {
-			$query = "SELECT * FROM turma_tem_usuario";
+			$query = "SELECT ttu.*,
+                             t.nome as turma_nome,
+                             u.nome as usuario_nome,
+                             u.id_perfil as usuario_perfil_id,
+                             p.nome as usuario_perfil_nome,
+                             c.id as curso_id,
+                             c.nome as curso_nome
+                        FROM turma_tem_usuario ttu
+                        LEFT JOIN turma t ON ttu.id_turma = t.id
+                        LEFT JOIN usuario u ON ttu.id_usuario = u.id
+                        LEFT JOIN perfil p ON u.id_perfil = p.id
+                        LEFT JOIN curso c on t.id_curso = c.id";
 			$pdo = PDOFactory::getConexao();
 			$comando = $pdo->prepare($query);
 			$comando->execute();
@@ -14,7 +25,12 @@
 				$turmatemusuario[] = new Turmatemusuario(
 				    $row->id,
 				    $row->id_turma,
-                    $row->id_usuario
+                    $row->id_usuario,
+                    $row->turma_nome,
+                    $row->usuario_perfil_id,
+                    $row->usuario_perfil_nome,
+                    $row->curso_id,
+                    $row->curso_nome
 				);
 			}
 			return $turmatemusuario;

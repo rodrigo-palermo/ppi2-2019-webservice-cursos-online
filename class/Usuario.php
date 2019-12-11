@@ -8,8 +8,8 @@
         public $senha;
         public $dth_inscricao;
         public $imagem;
-        public $perfil_nome;
         public $id_endereco;
+        public $perfil_nome;
 
         function __construct($id,
                              $id_perfil,
