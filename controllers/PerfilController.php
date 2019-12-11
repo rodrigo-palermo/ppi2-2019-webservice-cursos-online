@@ -57,12 +57,17 @@ class PerfilController {
     }
 
     public function deletar($request, $response, $args) {
-		$id = (int) $args['id'];
-		$dao = new PerfilDAO();
-		$perfil = $dao->buscarPorId($id);
-		$dao->deletar($id);
-		$response = $response->withJson($perfil);
-		$response = $response->withHeader('Content-type', 'application/json');
-		return $response;
-	}
+        try {
+            $id = (int) $args['id'];
+            $dao = new PerfilDAO();
+            $perfil = $dao->buscarPorId($id);
+            $dao->deletar($id);
+            $response = $response->withJson($perfil);
+        } catch (Exception $e) {
+            $response = $response->withStatus(412);
+            $response = $response->withJson($e->getMessage());
+        }
+        $response = $response->withHeader('Content-type', 'application/json');
+        return $response;
+    }
 }

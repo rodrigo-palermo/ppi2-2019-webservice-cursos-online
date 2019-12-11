@@ -75,11 +75,11 @@
 		}
 
 		public function deletar($id) {
-			$query = "DELETE from usuario WHERE id = :id";            
-			$pdo = PDOFactory::getConexao();
-			$comando = $pdo->prepare($query);
-			$comando->bindParam(":id", $id);
-			$comando->execute();
+                $query = "DELETE from usuario WHERE id = :id";
+                $pdo = PDOFactory::getConexao();
+                $comando = $pdo->prepare($query);
+                $comando->bindParam(":id", $id);
+                $comando->execute();
 		}
 
         public function buscarPorLogin($nome) {

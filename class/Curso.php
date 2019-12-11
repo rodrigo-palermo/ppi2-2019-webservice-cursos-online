@@ -9,6 +9,7 @@
         public $dth_criacao;
         public $imagem;
         public $categoria_nome;
+        public $usuario_criacao_nome;
 
         function __construct($id,
                              $id_categoria,
@@ -18,7 +19,8 @@
                              $dth_criacao,
                              $imagem,
                              //fk relations
-                             $categoria_nome = null
+                             $categoria_nome = null,
+                             $usuario_criacao_nome = null
         )
         {
             $this->id = $id;
@@ -29,6 +31,7 @@
             $this->dth_criacao = $dth_criacao;
             $this->imagem = $imagem;
             $this->categoria_nome = $categoria_nome;
+            $this->usuario_criacao_nome = $usuario_criacao_nome;
         }
     }
 ?>

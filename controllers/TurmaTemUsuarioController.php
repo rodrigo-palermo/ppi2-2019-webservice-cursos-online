@@ -65,12 +65,17 @@ class TurmaTemUsuarioController {
     }
 
     public function deletar($request, $response, $args) {
-		$id = (int) $args['id'];
-		$dao = new TurmaTemUsuarioDAO();
-		$turmatemusuario = $dao->buscarPorId($id);
-		$dao->deletar($id);
-		$response = $response->withJson($turmatemusuario);
-		$response = $response->withHeader('Content-type', 'application/json');
-		return $response;
-	}
+        try{
+            $id = (int) $args['id'];
+            $dao = new TurmaTemUsuarioDAO();
+            $turmatemusuario = $dao->buscarPorId($id);
+            $dao->deletar($id);
+            $response = $response->withJson($turmatemusuario);
+        } catch (Exception $e) {
+            $response = $response->withStatus(412);
+            $response = $response->withJson($e->getMessage());
+        }
+        $response = $response->withHeader('Content-type', 'application/json');
+        return $response;
+    }
 }

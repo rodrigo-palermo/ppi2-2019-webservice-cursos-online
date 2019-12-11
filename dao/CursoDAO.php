@@ -5,10 +5,11 @@
 	class CursoDAO {
 
 		public function listar() {
-			$query = "SELECT cur.*, cat.nome as categoria_nome 
+			$query = "SELECT cur.*, cat.nome as categoria_nome, u.nome as usuario_criacao_nome
                         FROM curso cur 
-                        LEFT JOIN categoria cat 
-                        ON cur.id_categoria = cat.id";
+                        LEFT JOIN categoria cat ON cur.id_categoria = cat.id
+                        LEFT JOIN usuario u ON cur.id_usuario_criacao = u.id
+                        ";
 			$pdo = PDOFactory::getConexao();
 			$comando = $pdo->prepare($query);
 			$comando->execute();
@@ -21,7 +22,8 @@
 										 $row->descricao,
 										 $row->dth_criacao,
 										 $row->imagem,
-                                         $row->categoria_nome
+                                         $row->categoria_nome,
+                                         $row->usuario_criacao_nome
 										 );
 			}
 			return $curso;

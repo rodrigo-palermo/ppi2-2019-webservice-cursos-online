@@ -11,6 +11,7 @@ class WsException extends \Exception
     public $response;
     public $arrCodeMessage = [
         404 => 'Não existem dados para o id informado.',
+
         500 => 'teste'
     ];
 
@@ -23,7 +24,7 @@ class WsException extends \Exception
         $response = $response->withJson([
             'error' => WsException::class,
             'status' => $this->http_status,
-//            'code' => $this->getCode(),
+            'code' => $this->getCode(),
             'userMessage' => $this->getWsMessage($code)
         ], $this->http_status);
         $this->response = $response;
