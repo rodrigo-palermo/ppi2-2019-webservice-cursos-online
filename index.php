@@ -89,11 +89,14 @@ $app->group('', function() use ($app) {
     $app->group("/turmatemusuario",
         function () {
             $this->get("", "TurmaTemUsuarioController::listar");
+            $this->get("/alunosdaturma/{id:[0-9]+}", "TurmaTemUsuarioController::listarAlunosDaTurma");
+            $this->get("/alunoshabilitadosparaturma/{id:[0-9]+}", "TurmaTemUsuarioController::listarAlunosHabilitadosParaTurma");
             $this->get("/{id:[0-9]+}", "TurmaTemUsuarioController::buscarPorId");
             $this->get("/turma/{id_turma:[0-9]+}", "TurmaTemUsuarioController::buscarPorTurmaId");
             $this->post("", "TurmaTemUsuarioController::inserir");
             $this->put("/{id:[0-9]+}", "TurmaTemUsuarioController::atualizar");
-            $this->delete("/{id:[0-9]+}", "TurmaTemUsuarioController::deletar");
+//            $this->delete("/{id:[0-9]+}", "TurmaTemUsuarioController::deletar");
+            $this->post("/removerusuariodaturma", "TurmaTemUsuarioController::deletar");
         }
     );
     //UsuarioPerfil
@@ -126,7 +129,7 @@ $app->group('', function() use ($app) {
 
     //com validacao de token
 })->add("UsuarioController::validarToken");
-    //ou sem validacao para testes
+    //ou sem validacao para debug
 // });
 	$app->run();
 

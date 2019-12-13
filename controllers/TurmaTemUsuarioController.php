@@ -18,7 +18,25 @@ class TurmaTemUsuarioController {
 		$response = $response->withHeader('Content-type', 'application/json');    
 		return $response;
       }
-      
+
+    public function listarAlunosDaTurma($request, $response, $args) {
+        $id = (int) $args['id'];
+        $dao = new TurmaTemUsuarioDAO();
+        $lista = $dao->listarAlunosDaTurma($id);
+        $response = $response->withJson($lista);
+        $response = $response->withHeader("Content-type", "application/json");
+        return $response;
+    }
+
+    public function listarAlunosHabilitadosParaTurma($request, $response, $args) {
+        $id = (int) $args['id'];
+        $dao = new TurmaTemUsuarioDAO();
+        $lista = $dao->listarAlunosHabilitadosParaTurma($id);
+        $response = $response->withJson($lista);
+        $response = $response->withHeader("Content-type", "application/json");
+        return $response;
+    }
+
     public function buscarPorTurmaId($request, $response, $args) {
 		$id_turma = (int) $args['id_turma'];
 		$dao = new TurmaTemUsuarioDAO();
@@ -48,7 +66,7 @@ class TurmaTemUsuarioController {
 		$response = $response->withHeader('Content-type', 'application/json');
 		$response = $response->withStatus(201);
 		return $response;
-      }
+    }
       
     public function atualizar($request, $response, $args) {
         $id = (int) $args['id'];
@@ -64,18 +82,36 @@ class TurmaTemUsuarioController {
         return $response;
     }
 
+//    public function deletar($request, $response, $args) {
+//        try{
+//            $id = (int) $args['id'];
+//            $dao = new TurmaTemUsuarioDAO();
+//            $turmatemusuario = $dao->buscarPorId($id);
+//            $dao->deletar($id);
+//            $response = $response->withJson($turmatemusuario);
+//        } catch (Exception $e) {
+//            $response = $response->withStatus(412);
+//            $response = $response->withJson($e->getMessage());
+//        }
+//        $response = $response->withHeader('Content-type', 'application/json');
+//        return $response;
+//    }
+
     public function deletar($request, $response, $args) {
-        try{
-            $id = (int) $args['id'];
-            $dao = new TurmaTemUsuarioDAO();
-            $turmatemusuario = $dao->buscarPorId($id);
-            $dao->deletar($id);
-            $response = $response->withJson($turmatemusuario);
-        } catch (Exception $e) {
-            $response = $response->withStatus(412);
-            $response = $response->withJson($e->getMessage());
-        }
+        $var = $request->getParsedBody();
+
+        // turma deve ser criada com somente um usuario PROFESSOR na classe Turma
+        // se turma existe, banco verifica se ALUNO já está matriculado nesta turma(constrain unique)
+
+        $turmatemusuario = new TurmaTemUsuario(0,
+            (int) $var['id_turma'],
+            (int) $var['id_usuario']
+        );
+        $dao = new TurmaTemUsuarioDAO();
+        $turmatemusuario = $dao->deletar($turmatemusuario);
+        $response = $response->withJson($turmatemusuario);
         $response = $response->withHeader('Content-type', 'application/json');
+        $response = $response->withStatus(201);
         return $response;
     }
 }

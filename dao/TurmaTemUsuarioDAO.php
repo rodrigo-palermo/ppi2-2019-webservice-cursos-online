@@ -62,6 +62,39 @@
 
 		}
 
+		public function listarAlunosDaTurma($id_turma) {
+			$query = "SELECT u.* FROM usuario u
+                        LEFT JOIN turma_tem_usuario ttu 
+                        ON ttu.id_usuario = u.id
+                        WHERE ttu.id_turma = :id_turma
+                        AND u.id_perfil = 3";  //Tornar PARAMETRO
+			$pdo = PDOFactory::getConexao();
+			$comando = $pdo->prepare($query);
+			$comando->bindParam ("id_turma",$id_turma);
+			$comando->execute();
+            $usuariosPorTurma = $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            return $usuariosPorTurma;
+
+		}
+
+		public function listarAlunosHabilitadosParaTurma($id_turma) {
+			$query = "SELECT * from usuario u WHERE id_perfil = 3 EXCEPT
+                        SELECT u.* FROM usuario u
+                        LEFT JOIN turma_tem_usuario ttu 
+                        ON ttu.id_usuario = u.id
+                        WHERE ttu.id_turma = :id_turma
+                        AND u.id_perfil = 3";  //Tornar PARAMETRO
+			$pdo = PDOFactory::getConexao();
+			$comando = $pdo->prepare($query);
+			$comando->bindParam ("id_turma",$id_turma);
+			$comando->execute();
+            $usuariosPorTurma = $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            return $usuariosPorTurma;
+
+		}
+
 		public function inserir(Turmatemusuario $turmatemusuario) {
 			$query = "INSERT INTO turma_tem_usuario(id_turma, id_usuario)
 						 VALUES (:id_turma, :id_usuario)";
@@ -84,12 +117,22 @@
 			$comando->execute();
 		}
 
-		public function deletar($id) {
-			$query = "DELETE from turma_tem_usuario WHERE id = :id";
-			$pdo = PDOFactory::getConexao();
-			$comando = $pdo->prepare($query);
-			$comando->bindParam(":id", $id);
-			$comando->execute();
-		}
+//		public function deletar($id) {
+//			$query = "DELETE FROM turma_tem_usuario WHERE id = :id";
+//			$pdo = PDOFactory::getConexao();
+//			$comando = $pdo->prepare($query);
+//			$comando->bindParam(":id", $id);
+//			$comando->execute();
+//		}
+
+        public function deletar(Turmatemusuario $turmatemusuario) {
+            $query = "DELETE FROM turma_tem_usuario
+						 WHERE id_turma = :id_turma AND  id_usuario = :id_usuario";
+            $pdo = PDOFactory::getConexao();
+            $comando = $pdo->prepare($query);
+            $comando->bindParam(":id_turma", $turmatemusuario->id_turma);
+            $comando->bindParam(":id_usuario", $turmatemusuario->id_usuario);
+            $comando->execute();
+        }
 	}
 ?>

@@ -137,7 +137,8 @@ class UsuarioController {
 														 $var['email'],
 														 $var['senha'],
 														 $var['dth_inscricao'],
-														 $var['imagem']
+														 $var['imagem'],
+														 $var['id_endereco']
 													);
 		$dao = new UsuarioDAO();
 		$usuario = $dao->inserir($usuario);
